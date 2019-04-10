@@ -1,11 +1,9 @@
 /* 瀑布流 */
 <style scoped>
-* {
+.falls {
   margin: 0;
   padding: 0;
   position: relative;
-}
-.falls {
   width: 100%;
   height: 600px;
   overflow: scroll;
@@ -15,10 +13,19 @@ img {
   width: 220px;
   position: absolute;
 }
+.caonima {
+  position: relative;
+  width: 220px;
+  height: 200px;
+}
+.caonima > img {
+  width: 220px;
+  position: absolute;
+}
 </style>
 
 <template>
-  <div class="falls">
+  <div class="falls" @scroll="handleScroll" ref="falls">
     瀑布流
     <hr>
     <div v-for="(item,i) in imgList" :key="i" style="display:inline">
@@ -42,13 +49,30 @@ export default {
     });
     setTimeout(() => {
       this.waterFall;
-    }, 500);
-    window.onresize = function() {  //定义窗口大小变更通知事件
-      this.waterFall
-      
-    };
-  }, 
-  methods: {},
+    }, 800);
+  },
+  methods: {
+    handleScroll(e) {
+      //滚动条事件
+      if (
+        500 + e.target.scrollTop >=
+        this.$refs.imgs[this.$refs.imgs.length - 1].offsetTop
+      ) {
+        // 模拟 ajax 获取数据
+        var datas = this.imgList;
+        let falls = document.querySelector(".falls");
+        for (var i = 0; i < datas.length; i++) {
+          var div = document.createElement("div");
+          div.className = "caonima";
+          div.innerHTML = '<img src="' + datas[i].url + '" alt="" style="">';
+          falls.appendChild(div);
+        }
+        this.waterFall;
+      } else {
+        return;
+      }
+    }
+  },
   computed: {
     waterFall() {
       var items = this.$refs.imgs;
@@ -77,8 +101,7 @@ export default {
           }
           items[i].style.top = oneHeight[index] + gap + "px"; //最小列的top
           items[i].style.left = items[index].offsetLeft + gap + "px"; //最小列的left
-
-          oneHeight[index] = oneHeight[index] + gap + items[i].offsetHeight;
+          oneHeight[index] = oneHeight[index] + gap + items[i].offsetHeight; //赋值最小的高度，然后重新计算数组里最小的值，重新定位---- 看了半天才懂
         }
       }
     }

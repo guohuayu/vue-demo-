@@ -27,6 +27,7 @@ img {
 <template>
   <div class="falls" @scroll="handleScroll" ref="falls">
     瀑布流
+    <button @click="testBtn">测试按钮</button>
     <hr>
     <div v-for="(item,i) in imgList" :key="i" style="display:inline">
       <img :src="item.url" ref="imgs">
@@ -52,6 +53,9 @@ export default {
     }, 800);
   },
   methods: {
+    testBtn() {
+      console.log(...[1, 2, 3]);
+    },
     handleScroll(e) {
       //滚动条事件
       if (
@@ -86,7 +90,7 @@ export default {
       for (var i = 0; i < items.length; i++) {
         if (i < columns) {
           //第一行定位
-          items[i].style.top = 0;
+          items[i].style.top = 20;
           items[i].style.left = i * (itemsWidth + gap) + "px";
           oneHeight.push(items[i].offsetHeight);
         } else {
@@ -99,7 +103,7 @@ export default {
               index = j; //最小列的下标
             }
           }
-          items[i].style.top = oneHeight[index] + gap + "px"; //最小列的top
+          items[i].style.top = oneHeight[index] + gap + 40 + "px"; //最小列的top
           items[i].style.left = items[index].offsetLeft + gap + "px"; //最小列的left
           oneHeight[index] = oneHeight[index] + gap + items[i].offsetHeight; //赋值最小的高度，然后重新计算数组里最小的值，重新定位---- 看了半天才懂
         }

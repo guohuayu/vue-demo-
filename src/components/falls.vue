@@ -18,7 +18,7 @@ img {
 <template>
   <div class="falls" @scroll="handleScroll" ref="falls">
     瀑布流
-    <button @click="testBtn">测试按钮</button>
+    <button @click="testBtn">测试按钮</button>  <span>{{isMounted}}</span>
     <hr>
     <div v-for="(item,i) in imgList" :key="i" style="display:inline">
       <img :src="item.url" ref="imgs">
@@ -32,20 +32,25 @@ export default {
   data() {
     return {
       imgList: "",
-      clientWidth: ""
+      clientWidth: "",
+      isMounted: false
     };
   },
   mounted: function() {
     this.req("https://www.apiopen.top/meituApi?page=3", "", res => {
       this.imgList = res.data.data;
     });
-    window.onresize = ()=>this.waterFall()  
+    setTimeout(()=>{ 
+       this.isMounted=true  
+      },500) 
+
+    window.onresize = () => this.waterFall();//响应式
     
   },
   updated: function() {
     //this.waterFall
     console.log("数据更新");
-    this.waterFall();
+     this.waterFall()
   },
   methods: {
     testBtn() {
@@ -66,8 +71,8 @@ export default {
     handleScroll(e) {
       //滚动条事件
       console.log(
-        this.$refs.falls.offsetHeight + e.target.scrollTop ==
-          this.$refs.imgs[this.$refs.imgs.length - 1].offsetTop
+        this.$refs.falls.offsetHeight + e.target.scrollTop,
+        this.$refs.imgs[this.$refs.imgs.length - 1].offsetTop
       );
       if (
         this.$refs.falls.offsetHeight + e.target.scrollTop >=
@@ -93,33 +98,37 @@ export default {
       }
     },
     waterFall() {
-      var items = this.$refs.imgs;
-      var gap = 10;
-      var pageWidth = document.documentElement.clientWidth;
-      var itemsWidth = items[0].offsetWidth;
-      var columns = parseInt(pageWidth / (itemsWidth + gap));
-      var oneHeight = [];
-      for (var i = 0; i < items.length; i++) {
-        if (i < columns) {
-          //第一行定位
-          items[i].style.top = 0;
-          items[i].style.left = i * (itemsWidth + gap) + "px";
-          oneHeight.push(items[i].offsetHeight);
-        } else {
-          //console.log(oneHeight); //为什么oneHeight一直在变??
-          var minHeight = oneHeight[0]; //算数组的最小值******
-          var index = 0;
-          for (var j = 0; j < oneHeight.length; j++) {
-            if (minHeight > oneHeight[j]) {
-              minHeight = oneHeight[j];
-              index = j; //最小列的下标
+      if (this.isMounted) {
+        console.log(this.isMounted);
+        
+        var items = this.$refs.imgs;
+        var gap = 10;
+        var pageWidth = document.documentElement.clientWidth;
+        var itemsWidth = items[0].offsetWidth;
+        var columns = parseInt(pageWidth / (itemsWidth + gap));
+        var oneHeight = [];
+        for (var i = 0; i < items.length; i++) {
+          if (i < columns) {
+            //第一行定位
+            items[i].style.top = 0;
+            items[i].style.left = i * (itemsWidth + gap) + "px";
+            oneHeight.push(items[i].offsetHeight);
+          } else {
+            //console.log(oneHeight); //为什么oneHeight一直在变??
+            var minHeight = oneHeight[0]; //算数组的最小值******
+            var index = 0;
+            for (var j = 0; j < oneHeight.length; j++) {
+              if (minHeight > oneHeight[j]) {
+                minHeight = oneHeight[j];
+                index = j; //最小列的下标
+              }
             }
+            items[i].style.top = oneHeight[index] + gap + "px"; //最小列的top
+            items[i].style.left = items[index].offsetLeft + gap + "px"; //最小列的left
+            oneHeight[index] = oneHeight[index] + gap + items[i].offsetHeight; //赋值最小的高度，然后重新计算数组里最小的值，重新定位---- 看了半天才懂
           }
-          items[i].style.top = oneHeight[index] + gap   + "px"; //最小列的top
-          items[i].style.left = items[index].offsetLeft + gap + "px"; //最小列的left
-          oneHeight[index] = oneHeight[index] + gap + items[i].offsetHeight; //赋值最小的高度，然后重新计算数组里最小的值，重新定位---- 看了半天才懂
         }
-      }
+      }else{'卧槽没走这里'}
     }
   },
   computed: {

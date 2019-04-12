@@ -44,13 +44,13 @@ export default {
        this.isMounted=true  
       },500) 
 
-    window.onresize = () => this.waterFall();//响应式
+    window.onresize = () => this.waterFall(); 
     
   },
   updated: function() {
     //this.waterFall
-    console.log("数据更新");
-     this.waterFall()
+    console.log("data数据更新");
+    this.waterFall()
   },
   methods: {
     testBtn() {
@@ -58,7 +58,7 @@ export default {
       var log = (...test) => console.log(...test),
         arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9],
         arr2 = [222, 31, 41, 19],
-        arr3 = ["wocao", "nima", "hehe", "aa"];
+        arr3 = ["wocao", "haha", "hehe", "aa"];
       arr3.splice(2, 2, { name: "guohuayu" }); //splice最强数组方法
       arr1.push(...arr2);
       log(
@@ -110,22 +110,22 @@ export default {
         for (var i = 0; i < items.length; i++) {
           if (i < columns) {
             //第一行定位
-            items[i].style.top = 0;
+            items[i].style.top = 40+'px'; //40给上面留地方啊
             items[i].style.left = i * (itemsWidth + gap) + "px";
             oneHeight.push(items[i].offsetHeight);
           } else {
-            //console.log(oneHeight); //为什么oneHeight一直在变??
-            var minHeight = oneHeight[0]; //算数组的最小值******
+            //console.log(oneHeight);  
+            var minHeight = oneHeight[0]; //算数组的最小值 
             var index = 0;
             for (var j = 0; j < oneHeight.length; j++) {
               if (minHeight > oneHeight[j]) {
                 minHeight = oneHeight[j];
-                index = j; //最小列的下标
+                index = j;  
               }
             }
-            items[i].style.top = oneHeight[index] + gap + "px"; //最小列的top
+            items[i].style.top = oneHeight[index]+40 + gap + "px"; //最小列的top
             items[i].style.left = items[index].offsetLeft + gap + "px"; //最小列的left
-            oneHeight[index] = oneHeight[index] + gap + items[i].offsetHeight; //赋值最小的高度，然后重新计算数组里最小的值，重新定位---- 看了半天才懂
+            oneHeight[index] = oneHeight[index] + gap + items[i].offsetHeight; //赋值最小的高度，然后重新计算数组里最小的值，重新定位 
           }
         }
       }else{'卧槽没走这里'}

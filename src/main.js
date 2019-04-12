@@ -10,7 +10,7 @@ import VueAxios from 'vue-axios'
 import req from '@/utils/axios'
 Vue.prototype.req=req;
 
-Vue.use(VueAxios,axios );
+Vue.use(VueAxios,axios);
 
 import user from '@/components/user/user'
 Vue.component('User',user)

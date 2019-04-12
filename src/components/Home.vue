@@ -30,7 +30,7 @@ export default {
     return {};
   },
   created: function() {
-    //this.$router.push({name:'Login'})
+     //this.$router.push({name:'Login'})
   },
   mounted: function() {   },
   methods: {

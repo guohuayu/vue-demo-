@@ -2,8 +2,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-size: 13px;
-  font-family: microsoft yahei;
+  font-size: 13px; 
 }
 html,
 body {
@@ -34,12 +33,9 @@ body {
   border-radius: 3px;
 }
 .containerT h1 {
-  font-size: 18px;
-  font-family: microsoft yahei, Arial, sans-serif;
+  font-size: 18px; 
   -webkit-transition-duration: 1s;
-  transition-duration: 1s;
-  -webkit-transition-timing-function: ease-in-put;
-  transition-timing-function: ease-in-put;
+  transition-duration: 1s; 
   font-weight: 500;
 }
 form {
@@ -86,8 +82,7 @@ form button {
   color: #333;
   border-radius: 3px;
   width: 200px;
-  cursor: pointer;
-  font-family: microsoft yahei, Arial, sans-serif;
+  cursor: pointer; 
   font-size: 16px;
   font-weight: 700;
   -webkit-transition-duration: 0.25s;
@@ -130,7 +125,7 @@ export default {
     commit(){
       console.log(this.usertext,this.userpassword);
       if (this.usertext==123&&this.userpassword==123) {
-        this.$router.push('/index')
+        this.$router.push('/Home')
       }
     }
   }

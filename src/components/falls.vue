@@ -37,7 +37,7 @@ export default {
     };
   },
   mounted: function() {
-    this.req("https://www.apiopen.top/meituApi?page=3", "", res => {
+    this.req("https://www.apiopen.top/meituApi?page=4", "", res => {
       this.imgList = res.data.data;
     });
     setTimeout(()=>{ 

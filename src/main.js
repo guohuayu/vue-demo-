@@ -10,6 +10,9 @@ import VueAxios from 'vue-axios'
 import req from '@/utils/axios'
 Vue.prototype.req=req;
 
+import global from '@/components/IPX/global' 
+Vue.prototype.global=global
+
 Vue.use(VueAxios,axios);
 
 import user from '@/components/user/user'
@@ -23,3 +26,6 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+ 
+

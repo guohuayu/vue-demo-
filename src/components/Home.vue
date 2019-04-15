@@ -7,7 +7,7 @@
      <User></User>  
      <TimeDown endTimes="1584372000" :callback="TimeDownCallback" endText="已经结束了"></TimeDown>  
      <This></This>  
-     <Falls></Falls>  
+     <!-- <Falls></Falls> -->  
      <Maps></Maps>  
   </div>
 </template>

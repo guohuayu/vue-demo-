@@ -2,7 +2,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-size: 13px; 
+  font-size: 13px;
 }
 html,
 body {
@@ -33,9 +33,9 @@ body {
   border-radius: 3px;
 }
 .containerT h1 {
-  font-size: 18px; 
+  font-size: 18px;
   -webkit-transition-duration: 1s;
-  transition-duration: 1s; 
+  transition-duration: 1s;
   font-weight: 500;
 }
 form {
@@ -82,7 +82,7 @@ form button {
   color: #333;
   border-radius: 3px;
   width: 200px;
-  cursor: pointer; 
+  cursor: pointer;
   font-size: 16px;
   font-weight: 700;
   -webkit-transition-duration: 0.25s;
@@ -99,9 +99,9 @@ form button:hover {
       <div id="output">
         <div class="containerT">
           <h1>用户登录</h1>
-          <p> 账号：123 进入首页</p>
-          <p> 账号：456 进入cart</p>
-          <p> 账号：789 进入瀑布流</p>
+          <p>账号：123 进入首页</p>
+          <p>账号：456 进入cart</p>
+          <p>账号：789 进入瀑布流被劫拦跳转首页</p>
           <form class="form" id="entry_form">
             <input type="text" placeholder="用户名" id="entry_name" value="admin" v-model="usertext">
             <input type="password" placeholder="密码" id="entry_password" v-model="userpassword">
@@ -122,28 +122,21 @@ export default {
     };
   },
   mounted: function() {
-    alert("账户：123 跳转到首页");
+    alert("账户：123 跳转到首页"); 
+    //console.log(this.global.usertext,this.global.userpassword);
+      
   },
-  methods:{
-    commit(){
-      console.log(this.usertext,this.userpassword);
-      this.router.beforeEach((to, from, next) => {
-        // to and from are both route objects. must call `next`.
-        const user=[123,456,789]
-        console.log(user[0]);
-        
-        if (this.usertext==user[0]&&this.userpassword==user[0]) {
-          //this.$router.push('/home')
-          console.log('hello world');
-          
-          
-        }
-
-        next()
-      })
-
-
-
+  methods: {
+    commit() {
+      this.global.usertext=this.usertext;
+      this.global.userpassword=this.userpassword;
+      if (this.usertext==123&&this.userpassword==123) {
+        this.$router.push('Home')
+      }else if(this.usertext==456&&this.userpassword==456){
+        this.$router.push('/Cart') 
+      }else{
+        this.$router.push('Falls')
+      }
     }
   }
 };

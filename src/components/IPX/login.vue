@@ -102,6 +102,7 @@ form button:hover {
           <p>账号：123 进入首页</p>
           <p>账号：456 进入cart</p>
           <p>账号：789 进入瀑布流被劫拦跳转首页</p>
+          <p>通过watch监听{{}}</p>
           <form class="form" id="entry_form">
             <input type="text" placeholder="用户名" id="entry_name" value="admin" v-model="usertext">
             <input type="password" placeholder="密码" id="entry_password" v-model="userpassword">
@@ -122,9 +123,14 @@ export default {
     };
   },
   mounted: function() {
-    alert("账户：123 跳转到首页"); 
+     
     //console.log(this.global.usertext,this.global.userpassword);
       
+  },
+  watch:{
+    usertext(a,b){
+      console.log(a,b); 
+    }
   },
   methods: {
     commit() {

@@ -25,16 +25,22 @@
         background: blue;
         top: 150px;
         right: -20px;
-        position: absolute
+        position: absolute; 
+    }
+    .border:hover{
+        background: red;
+    transform:rotateZ(3600deg);
+         opacity: 0.5;
+        transition: 10s  
     }
 </style>
 
 <template>
 
     <div class="banner"   >          空
-        <div class="boy"   v-show="a" @mousedown="down" ref="boy" style="left:150px"  > 我是男生</div>
-        <div class="girl"  v-show="b">我是女生</div>
-        <div class="border" :style= "{ 'background':  b?'pink':'blue' }" ></div>
+        <div class="boy"   v-show="boy" @mousedown.prevent="downboy" ref="boy"  style="left:150px"  > <-----往那移动 </div>
+        <div class="girl"  v-show="girl"  @mousedown.prevent="downgirl" ref="girl" style="left:150px"> <-----往那移动 </div>
+        <div class="border"   ></div>
         <button @click="nan">男生</button>
         <button @click="nv">女生</button>
 
@@ -46,31 +52,42 @@ import fallsVue from '../falls.vue';
 export default {
     data(){
         return{
-            a:true,
-            b:false 
+            boy:true ,
+            girl:false
         }
     },
     methods:{
         nan(){
-            this.a=true,
-            this.b=false
+            this.boy=true ,
+            this.girl=false
         },
         nv(){
-            this.a=false,
-            this.b=true
+           this.boy=false ,
+            this.girl=true
         },
-        down(e){
-             
-            this.move(e)
+        downboy(e){ 
+         this.switchsex('boy',event,2)   
         },
-        move(e){ 
-        console.log(e.clientX);
-        
-          var Mouseoffset=  e.clientX-this.$refs.boy.offsetLeft ;
-         
-          
-             this.$refs.boy.style.left=e.clientX-150+'px';
-              console.log(e.clientX );
+        downgirl(e){ 
+         this.switchsex('girl',event,1)     
+        },
+        switchsex (sex,e,num){                      //拖拽方法
+          var disX=e.clientX-  parseInt(this.$refs[sex].style.left);  
+             document.onmousemove=(e)=>{
+               this.$refs[sex].style.left=e.clientX-disX+'px' 
+                if (parseInt(this.$refs[sex].style.left)>=150) {  
+                     this.$refs[sex].style.left=150+'px' 
+                 }else if (parseInt(this.$refs[sex].style.left)<50) {
+                    if (num===1) {
+                        this.nan()
+                    }else{ this.nv()}
+                     this.$refs[sex].style.left=150+'px' 
+                 } 
+             }  
+             document.onmouseup=function name(e) {
+                 document.onmousemove=null  
+             }  
+
         }
     }
 }

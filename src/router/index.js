@@ -15,8 +15,10 @@ Vue.use(Router)
 const vueRouter = new Router({
   mode: 'history',
   routes: [
-    { path: '/', redirect: '/Home' },
-    { path: '/Login', name: 'Login', component: Login },
+    { path: '/', redirect: '/Login' },
+    { path: '/Login', name: 'Login', component: Login,meta:{
+      hello :'我是login登陆页'
+   } },
     { path: '/Home', name: 'Home', component: Home },
     { path: '/Cart', name: 'Cart', component: Cart },
     { path: '/Falls', name: 'Falls', component: Falls },
@@ -25,32 +27,35 @@ const vueRouter = new Router({
   ]
 });
 
-vueRouter.beforeEach((to, from, next) => {
-  const nextRoute = ['Home', 'Cart', 'Falls'];
-  console.log(to);
-  console.log(from);
-  var a = Vue.prototype.global.usertext,
-    b = Vue.prototype.global.userpassword;
-  console.log(a,b);
+  vueRouter.beforeEach((to, from, next) => {
+ 
+   console.log(to);
+   console.log(from);
+   next()
+  // var a = Vue.prototype.global.usertext,
+  //   b = Vue.prototype.global.userpassword;
+  // console.log(a,b);
 
-  var isLogin = false;
-  if (a == '' || b == '') { isLogin = true }//要进行登陆Login
-  console.log(isLogin);
+  // var isLogin = false;
+  // if (a == '' || b == '') { isLogin = true }//要进行登陆Login
+  // console.log(isLogin);
   
-  if (isLogin) {    //是否进行登陆
-    if (to.path!=='/Login') {
+  // if (isLogin) {                      //是否进行登陆
+  //   if (to.path!=='/Login') {
 
-      return next({path:'/Login'})
-    }else{return next()}
-  }else {           //不进行登陆
-    console.log('我输入了账号');
-    
-    //if (to.path=='/Login') {
-       return next()
-    // }else{return next()}
-  }
+  //     return next({path:'/Login'})
+  //   }else{return next()}
+  // }else {                             //不进行登陆
+  //   console.log('我输入了账号');
+  //   if (a==456||b==456) {
+       
+  //   }
+  //   //if (to.path=='/Login') {
+  //      return next()
+  //   // }else{return next()}
+  // }
  
 
-});
+});  
 
 export default vueRouter
